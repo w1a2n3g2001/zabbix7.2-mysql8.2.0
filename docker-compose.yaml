@@ -21,7 +21,7 @@ services:
       - 3306:3306
 
   zabbix-server:
-    image: registry.cn-hangzhou.aliyuncs.com/lwang37/zabbix-server:7.0
+    image: registry.cn-hangzhou.aliyuncs.com/lwang37/zabbix-server:7.2.4
     container_name: zabbix-server
     restart: always
     volumes:
@@ -41,7 +41,7 @@ services:
       - zabbix-db
 
   zabbix-web:
-    image: registry.cn-hangzhou.aliyuncs.com/lwang37/zabbix-web:7.0
+    image: registry.cn-hangzhou.aliyuncs.com/lwang37/zabbix-web:7.2.4
     container_name: zabbix-web
     restart: always
     networks:
