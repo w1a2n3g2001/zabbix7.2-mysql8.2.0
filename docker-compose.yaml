@@ -5,7 +5,7 @@ networks:
 
 services:
   zabbix-db:
-    image: registry.cn-hangzhou.aliyuncs.com/lwang37/mariadb:10.11.6
+    image: registry.cn-hangzhou.aliyuncs.com/lwang37/mysql:8.2.0
     container_name: zabbix-db
     restart: always
     volumes:
