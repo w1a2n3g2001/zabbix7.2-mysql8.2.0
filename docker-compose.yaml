@@ -5,7 +5,7 @@ networks:
 
 services:
   zabbix-db:
-    image: mysql:8.2.0
+    image: registry.cn-hangzhou.aliyuncs.com/lwang37/mariadb:10.11.6
     container_name: zabbix-db
     restart: always
     volumes:
@@ -21,7 +21,7 @@ services:
       - 3306:3306
 
   zabbix-server:
-    image: zabbix-server:7.2.4
+    image: registry.cn-hangzhou.aliyuncs.com/lwang37/zabbix-server:7.0
     container_name: zabbix-server
     restart: always
     volumes:
@@ -41,7 +41,7 @@ services:
       - zabbix-db
 
   zabbix-web:
-    image: zabbix-web:7.2.4
+    image: registry.cn-hangzhou.aliyuncs.com/lwang37/zabbix-web:7.0
     container_name: zabbix-web
     restart: always
     networks:
@@ -61,7 +61,7 @@ services:
       - zabbix-server
 
   zabbix-agent2:
-    image: zabbix-agent2:7.2.4
+    image: registry.cn-hangzhou.aliyuncs.com/lwang37-harbor/zabbix-agent2:latest
     container_name: zabbix-agent2
     restart: always
     networks:
