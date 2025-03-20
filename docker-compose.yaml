@@ -1,0 +1,76 @@
+version: "3.7"
+networks:
+  zabbix-network:
+    driver: bridge
+
+services:
+  zabbix-db:
+    image: mysql:8.2.0
+    container_name: zabbix-db
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./data:/var/lib/mysql
+    networks:
+      - zabbix-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    expose:
+      - '3306'
+    ports:
+      - 3306:3306
+
+  zabbix-server:
+    image: zabbix-server:7.2.4
+    container_name: zabbix-server
+    restart: always
+    volumes:
+#      - ./zabbix_server.conf:/etc/Zabbix/zabbix_server.conf:rw
+      - ./alertscripts:/usr/lib/zabbix/alertscripts
+    networks:
+      - zabbix-network
+    environment:
+      - DB_SERVER_HOST=zabbix-db
+      - MYSQL_DATABASE=zabbix
+      - MYSQL_USER=zabbix
+      - MYSQL_PASSWORD=zabbix
+      - MYSQL_ROOT_PASSWORD=123456
+    expose:
+      - '10051'
+    depends_on:
+      - zabbix-db
+
+  zabbix-web:
+    image: zabbix-web:7.2.4
+    container_name: zabbix-web
+    restart: always
+    networks:
+      - zabbix-network
+    environment:
+      - DB_SERVER_HOST=zabbix-db
+      - MYSQL_DATABASE=zabbix
+      - MYSQL_USER=zabbix
+      - MYSQL_PASSWORD=zabbix
+      - MYSQL_ROOT_PASSWORD=123456
+      - ZBX_SERVER_HOST=zabbix-server
+    expose:
+      - '8080'
+    ports:
+      - 8080:8080
+    depends_on:
+      - zabbix-server
+
+  zabbix-agent2:
+    image: zabbix-agent2:7.2.4
+    container_name: zabbix-agent2
+    restart: always
+    networks:
+      - zabbix-network
+    environment:
+      - ZBX_HOSTNAME=Zabbix server
+      - ZBX_SERVER_HOST=zabbix-server
+    depends_on:
+      - zabbix-db
+      - zabbix-server
+    expose:
+      - '10050'
