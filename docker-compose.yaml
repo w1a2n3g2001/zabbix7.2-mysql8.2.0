@@ -61,7 +61,7 @@ services:
       - zabbix-server
 
   zabbix-agent2:
-    image: registry.cn-hangzhou.aliyuncs.com/lwang37-harbor/zabbix-agent2:latest
+    image: registry.cn-hangzhou.aliyuncs.com/lwang37/zabbix-agent2:7.2.4
     container_name: zabbix-agent2
     restart: always
     networks:
