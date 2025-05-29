@@ -4,3 +4,4 @@
 默认帐号: Admin
 默认密码: zabbix
 这是一个测试的,正式使用肯定要用复杂密码,修改yaml即可
+\n 注:docker-compose版本太低的话会无法访问
